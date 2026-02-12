@@ -14,7 +14,18 @@ body {
     overflow-x: hidden;
     transition: background-color 0.5s ease;
 }
+.linear-card {
+    /* ... mantenha o que já tinha e adicione/atualize isto: */
+    will-change: transform;
+    filter: url(#rgbShift); /* Aplica o filtro que criamos acima */
+    transform-origin: center;
+}
 
+/* Efeito de rastro/blur no scroll rápido */
+.scrolling-fast .linear-card {
+    filter: url(#rgbShift) blur(1px);
+    transition: transform 0.1s ease-out;
+}
 /* CUSTOM CURSOR */
 .custom-cursor {
     width: 40px; height: 40px; border: 1px solid var(--primary);
