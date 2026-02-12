@@ -1,76 +1,129 @@
+/* 1. VARIÁVEIS E RESET */
 :root {
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --text-color: #f1f5f9;
-    --accent-color: #38bdf8;
-    --border-radius: 24px;
+    --bg-color: #030712; /* Azul quase preto, profundo */
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-color: #38bdf8; /* Azul cyan moderno */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --border-radius: 28px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Inter', sans-serif;
+    /* Manchas de luz ao fundo para destacar o efeito de vidro */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    margin: 0;
-}
-
-.bento-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
-    gap: 16px;
-    width: 90%;
-    max-width: 1000px;
     padding: 20px;
 }
 
+/* 2. CONTAINER BENTO GRID */
+.bento-container {
+    display: grid;
+    /* Grid de 4 colunas no desktop */
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(160px, auto);
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* 3. ESTILO DO CARD (GLASSMORPHISM) */
 .card {
-    background: var(--card-bg);
-    padding: 24px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent-color);
+    transform: translateY(-8px) scale(1.01);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
 }
 
-/* Ajustes Específicos do Grid */
+/* 4. POSICIONAMENTO DOS BLOCOS (DESKTOP) */
 .profile { grid-column: span 2; grid-row: span 2; }
-.projects { grid-column: span 2; }
-.skills { grid-column: span 1; }
-.contact { grid-column: span 2; }
-.social { grid-column: span 1; }
+.projects { grid-column: span 2; grid-row: span 1; }
+.skills { grid-column: span 1; grid-row: span 1; }
+.contact { grid-column: span 2; grid-row: span 1; }
+.social { grid-column: span 1; grid-row: span 1; }
 
-/* Estilização Interna */
-.avatar { border-radius: 50%; margin-bottom: 10px; }
+/* 5. TIPOGRAFIA E ELEMENTOS INTERNOS */
+h1 { font-size: 2rem; margin-bottom: 12px; font-weight: 800; letter-spacing: -0.02em; }
+h2, h3 { font-size: 1.25rem; margin-bottom: 16px; color: var(--accent-color); }
+
+p { color: var(--text-secondary); line-height: 1.6; }
+
+.avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-color); margin-bottom: 20px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .tags span {
-    background: #334155;
-    padding: 4px 10px;
-    border-radius: 8px;
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--accent-color);
+    padding: 6px 14px;
+    border-radius: 12px;
     font-size: 0.8rem;
-    margin-right: 5px;
+    font-weight: 600;
 }
 
 .btn {
-    display: inline-block;
-    margin-top: 10px;
-    color: var(--accent-color);
     text-decoration: none;
-    font-weight: bold;
+    color: var(--text-primary);
+    background: var(--accent-color);
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: auto;
+    transition: opacity 0.2s;
 }
 
-/* Responsividade para Celular */
-@media (max-width: 768px) {
+.btn:hover { opacity: 0.9; }
+
+/* 6. RESPONSIVIDADE (SMARTPHONES) */
+@media (max-width: 900px) {
     .bento-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas para tablets */
     }
+}
+
+@media (max-width: 600px) {
+    .bento-container {
+        grid-template-columns: 1fr; /* 1 coluna para celular */
+        gap: 16px;
+    }
+
+    /* Resetamos os spans para que todos ocupem a largura total */
     .profile, .projects, .skills, .contact, .social {
         grid-column: span 1;
+        grid-row: auto;
     }
+
+    .card {
+        padding: 24px;
+    }
+
+    h1 { font-size: 1.6rem; }
 }
