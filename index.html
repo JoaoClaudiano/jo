@@ -8,6 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <svg style="display: none;">
+      <defs>
+        <filter id="rgbShift">
+          <feOffset in="SourceGraphic" dx="2" dy="0" result="red" />
+          <feOffset in="SourceGraphic" dx="-2" dy="0" result="blue" />
+          <feColorMatrix in="red" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="redM" />
+          <feColorMatrix in="blue" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" result="blueM" />
+          <feBlend in="redM" in2="blueM" mode="screen" />
+        </filter>
+      </defs>
+    </svg>
     <div class="custom-cursor"></div>
     <div class="cursor-dot"></div>
     <div id="loader">
@@ -136,6 +147,35 @@
             link.addEventListener('mouseleave', () => {
                 link.style.transform = `translate3d(0, 0, 0)`;
             });
+        });
+
+        let currentPos = window.pageYOffset;
+        const content = document.querySelector('.projects-linear');
+        const update = () => {
+            const newPos = window.pageYOffset;
+            const diff = newPos - currentPos;
+            const speed = diff * 0.15; // Ajuste a intensidade aqui
+            // Aplica inclinação (skew) baseada na velocidade
+            // Limitamos a 15 graus para não quebrar a interface
+            const skew = Math.min(Math.max(speed, -15), 15);
+            document.querySelectorAll('.linear-card').forEach(card => {
+                // Se o card já tem a classe reveal, aplicamos a distorção de movimento
+                if(card.classList.contains('reveal')) {
+                    card.style.transform = `skewY(${skew}deg) scale(${1 - Math.abs(speed) * 0.002})`;
+                }
+            });
+            currentPos = newPos;
+            requestAnimationFrame(update);
+        };
+        update();
+        // Feedback visual: Adiciona classe quando está rolando
+        let isScrolling;
+        window.addEventListener('scroll', () => {
+            document.body.classList.add('scrolling-fast');
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(() => {
+                document.body.classList.remove('scrolling-fast');
+            }, 100);
         });
 
         // ZOOM EXPANSION ON CLICK
