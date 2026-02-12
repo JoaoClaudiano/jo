@@ -3,115 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Portfolio | 2026</title>
+    <title>Protocol_Portfolio_2026</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-    
 <body>
+
     <div id="loader">
-    <div class="loader-content">
-        <div class="glitch-text" data-text="INITIALIZING_SYSTEM">INITIALIZING_SYSTEM</div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        <div class="loader-status">
-            <span id="load-percent">0</span>% COMPLETE
+        <div class="loader-content">
+            <div class="glitch-text" data-text="INITIALIZING_SYSTEM">INITIALIZING_SYSTEM</div>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <div class="loader-status"><span id="load-percent">0</span>% COMPLETE</div>
         </div>
     </div>
-</div>
+
     <div class="noise"></div>
-    
     <div class="blob"></div>
 
     <main class="hero">
-        <div class="glass-header">
-            <span class="status">SYSTEM ONLINE</span>
-            <span class="date">FEB_2026</span>
-        </div>
+        <header class="glass-header">
+            <span class="status">SYSTEM_ACTIVE</span>
+            <span class="date">v.2.0.26</span>
+        </header>
 
         <section class="main-content">
-            <h1 class="glitch" data-text="SEU_NOME">SEU_NOME</h1>
-            <p class="subtitle">DEVELOPER & CREATIVE DESIGNER</p>
+            <h1 class="glitch">JOÃO_CLAUDIANO</h1>
+            <p class="subtitle">FULLSTACK DEVELOPER & CREATIVE ENGINEER</p>
             
             <div class="grid-container">
-                <div class="cyber-card">
+                <a href="https://gittree.pages.dev/" target="_blank" class="cyber-card project-card" style="--bg-image: url('https://screenshot-proxy.netlify.app/f_avif,w_400/https://gittree.pages.dev/')">
                     <span class="card-id">// 01</span>
-                    <h3>PROJETOS</h3>
+                    <div class="project-info">
+                        <h3>GITTREE</h3>
+                        <p>Visualização de Repositórios</p>
+                    </div>
                     <div class="scanline"></div>
-                </div>
-                <div class="cyber-card highlight">
+                </a>
+
+                <a href="https://modelotrabalhista.pages.dev/" target="_blank" class="cyber-card project-card" style="--bg-image: url('https://screenshot-proxy.netlify.app/f_avif,w_400/https://modelotrabalhista.pages.dev/')">
                     <span class="card-id">// 02</span>
-                    <h3>EXPERIÊNCIA</h3>
+                    <div class="project-info">
+                        <h3>LAW_MODELS</h3>
+                        <p>Gestão Trabalhista</p>
+                    </div>
                     <div class="scanline"></div>
-                </div>
+                </a>
+
+                <a href="https://joaoclaudiano.github.io/html-teste/" target="_blank" class="cyber-card project-card">
+                    <span class="card-id">// 03</span>
+                    <div class="project-info">
+                        <h3>SANDBOX_LAB</h3>
+                        <p>Experimental Web Dev</p>
+                    </div>
+                    <div class="scanline"></div>
+                </a>
+
+                <a href="https://granulometria-238955144744.southamerica-east1.run.app/" target="_blank" class="cyber-card project-card highlight">
+                    <span class="card-id">// 04</span>
+                    <div class="project-info">
+                        <h3>GEO_ANALYSIS</h3>
+                        <p>Engenharia Granulométrica</p>
+                    </div>
+                    <div class="scanline"></div>
+                </a>
+
+                <a href="https://joaoclaudiano.github.io/dosify/" target="_blank" class="cyber-card project-card">
+                    <span class="card-id">// 05</span>
+                    <div class="project-info">
+                        <h3>DOSIFY</h3>
+                        <p>Dosing Logic App</p>
+                    </div>
+                    <div class="scanline"></div>
+                </a>
             </div>
         </section>
 
         <footer class="glass-footer">
-            <p>BASED IN BRAZIL</p>
+            <p>BASED_IN_BRAZIL</p>
             <div class="social-links">
-                <a href="#">TW</a> / <a href="#">GH</a> / <a href="#">LI</a>
+                <a href="https://github.com/joaoclaudiano">GITHUB</a> / <a href="#">LINKEDIN</a>
             </div>
         </footer>
     </main>
+
     <script>
-    const cards = document.querySelectorAll('.cyber-card');
-
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left; // posição X dentro do card
-            const y = e.clientY - rect.top;  // posição Y dentro do card
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            // Calcula a rotação (máximo de 15 graus para não quebrar a UI)
-            const rotateX = ((y - centerY) / centerY) * -15;
-            const rotateY = ((x - centerX) / centerX) * 15;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-        });
-    });
-            // Simulação de carregamento
+        // LOADER SCRIPT
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
             const fill = document.querySelector('.progress-fill');
             const percentText = document.getElementById('load-percent');
             let progress = 0;
-        
-            // Intervalo para animar a barra de progresso
             const interval = setInterval(() => {
-                progress += Math.random() * 15; // Incrementos aleatórios para parecer real
+                progress += Math.random() * 20;
                 if (progress > 100) progress = 100;
-                
                 fill.style.width = `${progress}%`;
                 percentText.innerText = Math.floor(progress);
-        
                 if (progress >= 100) {
                     clearInterval(interval);
-                    setTimeout(() => {
-                        loader.classList.add('loaded'); // Esconde o loader
-                    }, 500);
+                    setTimeout(() => loader.classList.add('loaded'), 500);
                 }
-            }, 150);
+            }, 100);
         });
-        
-        // Adicione este detalhe ao seu script de TILT anterior para o brilho seguir o mouse
-        document.querySelectorAll('.cyber-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
+
+        // TILT EFFECT & MOUSE GLOW SCRIPT
+        const cards = document.querySelectorAll('.cyber-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 card.style.setProperty('--x', `${x}px`);
                 card.style.setProperty('--y', `${y}px`);
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
             });
         });
-</script>
+    </script>
 </body>
 </html>
