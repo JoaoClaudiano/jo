@@ -1,8 +1,10 @@
 :root {
-    --primary: #00f2ff; /* Ciano Neon */
+    --primary: #00f2ff;
     --bg: #050505;
     --text: #ffffff;
-    --glass: rgba(255, 255, 255, 0.05);
+    --text-dim: #94a3b8;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border-radius: 12px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
@@ -11,185 +13,106 @@ body {
     background-color: var(--bg);
     color: var(--text);
     font-family: 'Inter', sans-serif;
-    overflow: hidden; /* Mantém o foco na tela cheia */
-    height: 100vh;
-}
-/* TELA DE LOADER */
-#loader {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #050505;
-    z-index: 10000; /* Acima de tudo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.8s ease, visibility 0.8s;
+    overflow-x: hidden;
+    min-height: 100vh;
 }
 
-.loader-content {
-    text-align: center;
-    width: 300px;
-}
-
-.glitch-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    color: var(--primary);
-    margin-bottom: 15px;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.progress-fill {
-    position: absolute;
-    width: 0%;
-    height: 100%;
-    background: var(--primary);
-    box-shadow: 0 0 15px var(--primary);
-    transition: width 0.4s ease;
-}
-
-.loader-status {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
-    color: var(--text-secondary);
-    margin-top: 10px;
-    letter-spacing: 2px;
-}
-
-/* Classe para esconder o loader */
-#loader.loaded {
-    opacity: 0;
-    visibility: hidden;
-}
-/* Efeito de Ruído/Grain (Essencial para o estilo KPR) */
+/* TEXTURAS DE FUNDO */
 .noise {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 9999;
-    pointer-events: none;
-    opacity: .05;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 999; pointer-events: none; opacity: .03;
     background-image: url('https://media.giphy.com/media/oEI9uWUzn938w/giphy.gif');
 }
 
-/* Mancha de luz seguindo a estética Dark Immersive */
 .blob {
-    position: absolute;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
-    filter: blur(80px);
-    z-index: -1;
-    animation: move 20s infinite alternate;
+    position: fixed; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0, 242, 255, 0.08) 0%, transparent 70%);
+    filter: blur(80px); z-index: -1; top: -100px; left: -100px;
 }
 
-@keyframes move {
-    from { transform: translate(-10%, -10%); }
-    to { transform: translate(50%, 20%); }
+/* LOADER STYLES */
+#loader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center;
+    transition: opacity 0.8s, visibility 0.8s;
 }
+#loader.loaded { opacity: 0; visibility: hidden; }
+.loader-content { width: 250px; text-align: center; }
+.glitch-text { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
+.progress-bar { width: 100%; height: 1px; background: rgba(255,255,255,0.1); overflow: hidden; }
+.progress-fill { width: 0%; height: 100%; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
 
+/* HERO LAYOUT */
 .hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 40px;
-    border: 1px solid rgba(255,255,255,0.1);
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: space-between; padding: 40px;
 }
 
-/* Tipografia Glitch */
+.glass-header, .glass-footer {
+    display: flex; justify-content: space-between;
+    font-family: 'Orbitron'; font-size: 0.65rem; letter-spacing: 2px; color: var(--text-dim);
+}
+
+/* TITULO PRINCIPAL */
 h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 900;
-    letter-spacing: -5px;
-    position: relative;
+    font-size: clamp(2rem, 8vw, 6rem);
+    font-weight: 900; letter-spacing: -2px; margin: 20px 0 5px;
 }
+.subtitle { color: var(--primary); font-size: 0.7rem; letter-spacing: 4px; margin-bottom: 40px; font-weight: 600; }
 
-.subtitle {
-    font-size: 0.8rem;
-    letter-spacing: 5px;
-    color: var(--primary);
-    margin-bottom: 40px;
-}
-
-/* Cards Estilo Terminal */
+/* GRID DE PROJETOS */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px; width: 100%;
 }
 
-/* Garante que o movimento seja fluido */
 .cyber-card {
-    transition: transform 0.15s ease-out, border-color 0.3s, background 0.3s;
-    transform-style: preserve-3d; /* Permite que filhos também fiquem em 3D */
-    will-change: transform; /* Otimiza a performance da GPU */
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 40px 25px; border-radius: var(--border-radius);
+    position: relative; overflow: hidden; transition: all 0.3s ease-out;
+    text-decoration: none; display: flex; flex-direction: column;
+    background-size: cover; background-position: center;
 }
 
-/* Adiciona um brilho que segue o mouse (Opcional, mas muito KPR) */
+.project-card {
+    background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.95)), var(--bg-image);
+}
+
+.cyber-card:hover {
+    border-color: var(--primary);
+    background-image: linear-gradient(to bottom, rgba(0, 242, 255, 0.1), rgba(5, 5, 5, 0.95)), var(--bg-image);
+}
+
+/* MOUSE GLOW */
 .cyber-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: radial-gradient(800px circle at var(--x, 0) var(--y, 0), rgba(255,255,255,0.06), transparent 40%);
-    border-radius: inherit;
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(400px circle at var(--x, 0) var(--y, 0), rgba(0, 242, 255, 0.15), transparent 40%);
     pointer-events: none;
 }
-.highlight {
-    border-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-}
 
-/* Animação de digitação para o texto (Cyberpunk vibe) */
-.status {
-    display: inline-block;
-    border-right: 2px solid var(--primary);
-    animation: blink 0.8s infinite;
-    padding-right: 5px;
-}
+.card-id { font-family: 'Orbitron'; font-size: 0.6rem; color: var(--primary); margin-bottom: 15px; }
+.project-info h3 { font-family: 'Orbitron'; font-size: 1.1rem; color: #fff; margin-bottom: 8px; transition: 0.3s; }
+.project-card:hover h3 { transform: translateX(5px); color: var(--primary); }
+.project-info p { font-size: 0.75rem; color: var(--text-dim); }
 
-@keyframes blink {
-    50% { border-color: transparent; }
-}
-.card-id { font-size: 0.7rem; color: var(--primary); display: block; margin-bottom: 10px; }
+.highlight { border-color: rgba(0, 242, 255, 0.5); box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); }
 
-/* Linha de Scan (Efeito de monitor antigo) */
+/* SCANLINE ANIMATION */
 .scanline {
-    width: 100%;
-    height: 2px;
-    background: rgba(0, 242, 255, 0.2);
-    position: absolute;
-    top: -100%;
-    left: 0;
-    animation: scan 4s linear infinite;
+    position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: rgba(0, 242, 255, 0.1); animation: scan 3s linear infinite;
 }
+@keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
 
-@keyframes scan {
-    0% { top: -100%; }
-    100% { top: 200%; }
-}
+.social-links a { color: var(--text); text-decoration: none; transition: 0.3s; }
+.social-links a:hover { color: var(--primary); }
 
-/* Cabeçalho e Rodapé "Glass" */
-.glass-header, .glass-footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    font-family: 'Orbitron';
-}
-
-/* Responsividade */
+/* RESPONSIVIDADE */
 @media (max-width: 768px) {
     .hero { padding: 20px; }
-    h1 { letter-spacing: -2px; }
+    h1 { font-size: 3rem; }
     .grid-container { grid-template-columns: 1fr; }
 }
