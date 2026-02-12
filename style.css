@@ -72,21 +72,39 @@ h1 {
     gap: 20px;
 }
 
+/* Garante que o movimento seja fluido */
 .cyber-card {
-    background: var(--glass);
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 30px;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
+    transition: transform 0.15s ease-out, border-color 0.3s, background 0.3s;
+    transform-style: preserve-3d; /* Permite que filhos também fiquem em 3D */
+    will-change: transform; /* Otimiza a performance da GPU */
 }
 
-.cyber-card:hover {
+/* Adiciona um brilho que segue o mouse (Opcional, mas muito KPR) */
+.cyber-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(800px circle at var(--x, 0) var(--y, 0), rgba(255,255,255,0.06), transparent 40%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+.highlight {
     border-color: var(--primary);
-    background: rgba(0, 242, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
 }
 
+/* Animação de digitação para o texto (Cyberpunk vibe) */
+.status {
+    display: inline-block;
+    border-right: 2px solid var(--primary);
+    animation: blink 0.8s infinite;
+    padding-right: 5px;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
 .card-id { font-size: 0.7rem; color: var(--primary); display: block; margin-bottom: 10px; }
 
 /* Linha de Scan (Efeito de monitor antigo) */
