@@ -78,6 +78,40 @@
             card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         });
     });
+            // Simulação de carregamento
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const fill = document.querySelector('.progress-fill');
+            const percentText = document.getElementById('load-percent');
+            let progress = 0;
+        
+            // Intervalo para animar a barra de progresso
+            const interval = setInterval(() => {
+                progress += Math.random() * 15; // Incrementos aleatórios para parecer real
+                if (progress > 100) progress = 100;
+                
+                fill.style.width = `${progress}%`;
+                percentText.innerText = Math.floor(progress);
+        
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.classList.add('loaded'); // Esconde o loader
+                    }, 500);
+                }
+            }, 150);
+        });
+        
+        // Adicione este detalhe ao seu script de TILT anterior para o brilho seguir o mouse
+        document.querySelectorAll('.cyber-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
 </script>
 </body>
 </html>
