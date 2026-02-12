@@ -1,129 +1,122 @@
-/* 1. VARIÁVEIS E RESET */
 :root {
-    --bg-color: #030712; /* Azul quase preto, profundo */
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --accent-color: #38bdf8; /* Azul cyan moderno */
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --border-radius: 28px;
+    --primary: #00f2ff; /* Ciano Neon */
+    --bg: #050505;
+    --text: #ffffff;
+    --glass: rgba(255, 255, 255, 0.05);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
 body {
-    background-color: var(--bg-color);
-    /* Manchas de luz ao fundo para destacar o efeito de vidro */
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%);
-    color: var(--text-primary);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden; /* Mantém o foco na tela cheia */
+    height: 100vh;
 }
 
-/* 2. CONTAINER BENTO GRID */
-.bento-container {
-    display: grid;
-    /* Grid de 4 colunas no desktop */
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(160px, auto);
-    gap: 20px;
-    width: 100%;
-    max-width: 1100px;
+/* Efeito de Ruído/Grain (Essencial para o estilo KPR) */
+.noise {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: .05;
+    background-image: url('https://media.giphy.com/media/oEI9uWUzn938w/giphy.gif');
 }
 
-/* 3. ESTILO DO CARD (GLASSMORPHISM) */
-.card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--border-radius);
-    padding: 32px;
+/* Mancha de luz seguindo a estética Dark Immersive */
+.blob {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: -1;
+    animation: move 20s infinite alternate;
+}
+
+@keyframes move {
+    from { transform: translate(-10%, -10%); }
+    to { transform: translate(50%, 20%); }
+}
+
+.hero {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    justify-content: space-between;
+    padding: 40px;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.card:hover {
-    transform: translateY(-8px) scale(1.01);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(56, 189, 248, 0.4);
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+/* Tipografia Glitch */
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -5px;
+    position: relative;
 }
 
-/* 4. POSICIONAMENTO DOS BLOCOS (DESKTOP) */
-.profile { grid-column: span 2; grid-row: span 2; }
-.projects { grid-column: span 2; grid-row: span 1; }
-.skills { grid-column: span 1; grid-row: span 1; }
-.contact { grid-column: span 2; grid-row: span 1; }
-.social { grid-column: span 1; grid-row: span 1; }
-
-/* 5. TIPOGRAFIA E ELEMENTOS INTERNOS */
-h1 { font-size: 2rem; margin-bottom: 12px; font-weight: 800; letter-spacing: -0.02em; }
-h2, h3 { font-size: 1.25rem; margin-bottom: 16px; color: var(--accent-color); }
-
-p { color: var(--text-secondary); line-height: 1.6; }
-
-.avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-color); margin-bottom: 20px; }
-
-.tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tags span {
-    background: rgba(56, 189, 248, 0.1);
-    color: var(--accent-color);
-    padding: 6px 14px;
-    border-radius: 12px;
+.subtitle {
     font-size: 0.8rem;
-    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--primary);
+    margin-bottom: 40px;
 }
 
-.btn {
-    text-decoration: none;
-    color: var(--text-primary);
-    background: var(--accent-color);
-    padding: 12px 24px;
-    border-radius: 16px;
-    font-weight: 700;
-    text-align: center;
-    margin-top: auto;
-    transition: opacity 0.2s;
+/* Cards Estilo Terminal */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
 }
 
-.btn:hover { opacity: 0.9; }
-
-/* 6. RESPONSIVIDADE (SMARTPHONES) */
-@media (max-width: 900px) {
-    .bento-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 colunas para tablets */
-    }
+.cyber-card {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
 }
 
-@media (max-width: 600px) {
-    .bento-container {
-        grid-template-columns: 1fr; /* 1 coluna para celular */
-        gap: 16px;
-    }
+.cyber-card:hover {
+    border-color: var(--primary);
+    background: rgba(0, 242, 255, 0.05);
+}
 
-    /* Resetamos os spans para que todos ocupem a largura total */
-    .profile, .projects, .skills, .contact, .social {
-        grid-column: span 1;
-        grid-row: auto;
-    }
+.card-id { font-size: 0.7rem; color: var(--primary); display: block; margin-bottom: 10px; }
 
-    .card {
-        padding: 24px;
-    }
+/* Linha de Scan (Efeito de monitor antigo) */
+.scanline {
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 242, 255, 0.2);
+    position: absolute;
+    top: -100%;
+    left: 0;
+    animation: scan 4s linear infinite;
+}
 
-    h1 { font-size: 1.6rem; }
+@keyframes scan {
+    0% { top: -100%; }
+    100% { top: 200%; }
+}
+
+/* Cabeçalho e Rodapé "Glass" */
+.glass-header, .glass-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    font-family: 'Orbitron';
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero { padding: 20px; }
+    h1 { letter-spacing: -2px; }
+    .grid-container { grid-template-columns: 1fr; }
 }
