@@ -21,7 +21,6 @@ def init_db():
 
 def save_news(item):
     conn = get_conn()
-    # Evita duplicados
     cursor = conn.cursor()
     cursor.execute("SELECT id FROM news WHERE link = ?", (item['link'],))
     if cursor.fetchone() is None:
@@ -29,5 +28,8 @@ def save_news(item):
             "INSERT INTO news (title, summary, link) VALUES (?, ?, ?)",
             (item['title'], item['summary'], item['link'])
         )
-    conn.commit()
+        conn.commit()
+        conn.close()
+        return True  # nova notícia
     conn.close()
+    return False
