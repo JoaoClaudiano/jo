@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 import sqlite3
 
-DB_PATH = "../bot/news.db"
 app = FastAPI()
+DB_PATH = "../bot/news.db"
+connections = []
 
 def get_latest_news(limit=5):
     conn = sqlite3.connect(DB_PATH)
@@ -15,3 +16,13 @@ def get_latest_news(limit=5):
 @app.get("/noticias")
 def noticias(limit: int = 5):
     return get_latest_news(limit)
+
+@app.websocket("/ws")
+async def websocket_endpoint(ws: WebSocket):
+    await ws.accept()
+    connections.append(ws)
+    try:
+        while True:
+            await ws.receive_text()  # manter conexão
+    except:
+        connections.remove(ws)
